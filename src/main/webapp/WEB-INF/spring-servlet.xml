@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <context:component-scan base-package="college"/>
+    <context:component-scan base-package="college.dao"/>
+    <context:component-scan base-package="college.service"/>
+
+
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" name="internalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--    DataBase Connectivity-->
+
+    <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/college"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="driverManagerDataSource"/>
+    </bean>
+
+    <bean class="college.dao.AdminDaoImpl" name="adminDao"/>
+    <bean class="college.dao.FacultyDaoImpl" name="facultyDao"/>
+    <bean class="college.dao.StudentDaoImpl" name="studentDao"/>
+
+    <bean class="college.service.AdminServiceImpl" name="adminService"/>
+    <bean class="college.service.FacultyServiceImpl" name="facultyService"/>
+    <bean class="college.service.StudentServiceImpl" name="studentService"/>
+
+</beans>
